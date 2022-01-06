@@ -3,7 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 const CLIENT_ID =
-  "229181458743-7e5rj587bq9qsjr7e7c5ut4kktgunpgt.apps.googleusercontent.com";
+  "800666244265-0e5gv7a51masmufr3h95tgo1tq0dpgd7.apps.googleusercontent.com";
 const API_KEY = "AIzaSyAXTTATGaeYvWKHSiuLd7ucqmHeMxUoX3g";
 
 // Authorization scopes required by the API; multiple scopes can be
