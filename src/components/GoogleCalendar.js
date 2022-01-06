@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 
 const CLIENT_ID =
   "800666244265-0e5gv7a51masmufr3h95tgo1tq0dpgd7.apps.googleusercontent.com";
-const API_KEY = "AIzaSyAXTTATGaeYvWKHSiuLd7ucqmHeMxUoX3g";
+const API_KEY = "AIzaSyD8-KtU-ntd30WGLrLjgxTHPcFI6uh3JiU";
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
