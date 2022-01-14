@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+// import { Toolti/p } from "bootstrap";
 
 const CLIENT_ID =
-  "800666244265-0e5gv7a51masmufr3h95tgo1tq0dpgd7.apps.googleusercontent.com";
-const API_KEY = "AIzaSyD8-KtU-ntd30WGLrLjgxTHPcFI6uh3JiU";
+  "800666244265-lto1ep2f97vs2ts40omitb1ko1ckjq8v.apps.googleusercontent.com";
+const API_KEY = "AIzaSyCfAHxZMKrG-t6CBNDfU9DHyXb6fNtL2xw";
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
@@ -12,9 +13,9 @@ const SCOPES =
   "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar";
 
 const GoogleCalendar = () => {
+  const [login ,setLogin] = useState(false);
   const [events, setEvents] = useState(null);
-
-  useEffect(() => {
+const signin = () => {
     const script = document.createElement("script");
     script.async = true;
     script.defer = true;
@@ -24,8 +25,10 @@ const GoogleCalendar = () => {
 
     script.addEventListener("load", () => {
       if (window.gapi) handleClientLoad();
+     
     });
-  }, []);
+  }
+
 
   const openSignInPopup = () => {
     window.gapi.auth2.authorize(
@@ -38,13 +41,13 @@ const GoogleCalendar = () => {
           if (res.access_token)
             localStorage.setItem("access_token", res.access_token);
 
-          // fetch(
-          //   `https://www.googleapis.com/calendar/v3/users/me/calendarList?access_token=${res.access_token}`
-          // )
-          //   .then((res) => res.json())
-          //   .then((data) =>
-          //     localStorage.setItem("calendarId", data.items[0].id)
-          //   );
+          fetch(
+            `https://www.googleapis.com/calendar/v3/users/me/calendarList?access_token=${res.access_token}`
+          )
+            .then((res) => res.json())
+            .then((data) =>
+              localStorage.setItem("calendarId", data.items[0].id)
+            );
 
           window.gapi.client.load("calendar", "v3", listUpcomingEvents);
         }
@@ -86,11 +89,15 @@ const GoogleCalendar = () => {
         })
         .then((data) => {
           if (data?.items) {
-            console.log(data);
+            console.log("my data",data.items);
             setEvents(formatEvents(data.items));
+            setLogin(true)
+
           }
         });
+
     }
+
   };
 
   /**
@@ -122,19 +129,34 @@ const GoogleCalendar = () => {
   const formatEvents = (list) => {
     return list.map((item) => ({
       title: item.summary,
+      disc: item.description,
       start: item.start.dateTime || item.start.date,
       end: item.end.dateTime || item.end.date,
     }));
   };
 
+  // const inputdata =()=>{
+  //     let dateStr = prompt('Enter a date in YYYY-MM-DD format');
+  //     let date = new Date(dateStr + 'T00:00:00'); // will be in local time
+
+  // }
+
   const addEvent = () => {
+
+    
     if (window.gapi.client || localStorage.getItem("access_token")) {
       let today = new Date();
-
+      var monthNames = [ "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December" ];
+      // let dateStr = prompt('Enter a start date ');
+    var dateStr = prompt("Please enter date.", today.getDate()+"-"+monthNames[today.getMonth()]+"-"+today.getFullYear());
+      let dateEnd = prompt('Enter a end date');
+      let title = prompt('Enter title');
+      let description = prompt('Enter disc');
       fetch(
         `https://www.googleapis.com/calendar/v3/calendars/primary/events?key=${API_KEY}&timeMax=${new Date(
-          "Apr 14, 2021"
-        ).toISOString()}&timeMin=${new Date("Apr 15, 2021").toISOString()}`,
+          "Apr 01, 2021"
+        ).toISOString()}&timeMin=${new Date("Apr 01, 2021").toISOString()}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -152,12 +174,13 @@ const GoogleCalendar = () => {
             },
             body: JSON.stringify({
               end: {
-                dateTime: new Date("Apr 16, 2021"),
+                dateTime: new Date(dateEnd),
               },
               start: {
-                dateTime: new Date("Apr 15, 2021"),
+                dateTime: new Date(dateStr),
               },
-              summary: "Test",
+              summary: title,
+              description: description,
             }),
           }
         );
@@ -166,11 +189,13 @@ const GoogleCalendar = () => {
 
   return (
     <>
-      <button onClick={addEvent}>Add event</button>
+    {login && <button onClick={addEvent}>Add event</button>}
+      <button onClick={signin}>signen</button>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={events}
+        
       />
     </>
   );
