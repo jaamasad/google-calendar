@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import googleCalendarPlugin from '@fullcalendar/google-calendar';
+import { Tooltip } from "bootstrap";
+
+import { Modal } from "reactstrap";
+let tooltipInstance = null;
 // import { Toolti/p } from "bootstrap";
 
 const CLIENT_ID =
@@ -15,7 +20,12 @@ const SCOPES =
 const GoogleCalendar = () => {
   const [login ,setLogin] = useState(false);
   const [events, setEvents] = useState(null);
-const signin = () => {
+  const [event, setEvent] = useState(null);
+  const [model, setModel] = useState(false)
+
+
+  useEffect(() => {
+    // Update the document title using the browser API
     const script = document.createElement("script");
     script.async = true;
     script.defer = true;
@@ -26,9 +36,10 @@ const signin = () => {
     script.addEventListener("load", () => {
       if (window.gapi) handleClientLoad();
      
-    });
+    });  });
+  const signin=()=>{
+    setLogin(true)
   }
-
 
   const openSignInPopup = () => {
     window.gapi.auth2.authorize(
@@ -89,9 +100,8 @@ const signin = () => {
         })
         .then((data) => {
           if (data?.items) {
-            console.log("my data",data.items);
+            // console.log("my data",data.items);
             setEvents(formatEvents(data.items));
-            setLogin(true)
 
           }
         });
@@ -187,16 +197,44 @@ const signin = () => {
     }
   };
 
+
+
+  const handleMouseEnter = (info) => {
+    // console.log()
+    if (info.event._def.extendedProps.disc) {
+      tooltipInstance = new Tooltip(info.el, {
+        title: info.event._def.extendedProps.disc,
+        html: true,
+        placement: "top",
+        trigger: "hover",
+        container: "body"
+      });
+
+      tooltipInstance.show();
+    }
+  };
+
+  const handleMouseLeave = (info) => {
+      tooltipInstance.dispose();
+  
+  };
+
   return (
     <>
     {login && <button onClick={addEvent}>Add event</button>}
       <button onClick={signin}>signen</button>
       <FullCalendar
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin,googleCalendarPlugin]}
         initialView="dayGridMonth"
         events={events}
+        GoogleCalendarApikey={API_KEY}
+
+        eventMouseEnter={handleMouseEnter}
+        eventMouseLeave={handleMouseLeave}
         
       />
+
+ 
     </>
   );
 };
