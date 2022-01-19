@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+.Eventmodel {
+  position: absolute;
+  width: 340px;
+  top:  -100vh;
+  z-index: 1040;
+  transform: translate(0,0);
+  border: 1px solid rgb(229, 229, 229);
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 50%) 0px 5px 15px;
+  padding: 20px;
+  display: block;
+  left: 28%;
+}
+
+.Eventmodel button {
+  width: 30px;
+  height: 30px;
+  margin-top: -56px;
+  margin-right: -34px;
+  float: right;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.calander-container {
+  position: relative;
+}
+
+.button-container {
+  width: 225px;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container button {
+  width: 100px;
+  cursor: pointer;
+  height: 30px;
+  border: none;
+  background: #76818d;
+  color: white;
+  font-size: 16px;
+}
