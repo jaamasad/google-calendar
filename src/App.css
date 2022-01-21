@@ -83,3 +83,54 @@
   color: white;
   font-size: 16px;
 }
+
+.date-input-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+}
+
+/* inputModal */
+
+.inputModal {
+  position: absolute;
+  width: 340px;
+  top:  -100vh;
+  z-index: 1040;
+  transform: translate(0,0);
+  border: 1px solid rgb(229, 229, 229);
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 50%) 0px 5px 15px;
+  padding: 20px;
+  display: block;
+  left: 28%;
+}
+
+.inputModal input {
+  width: 140px;
+  height: 25px;
+}
+
+.popup-button-container {
+  display: flex;
+justify-content: space-evenly;
+width: 50%;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.popup-button-container button {
+  width: 80px;
+    height: 30px;
+    border: none;
+    background: blue;
+    font-weight: 700;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
