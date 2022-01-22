@@ -3,7 +3,9 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import googleCalendarPlugin from "@fullcalendar/google-calendar"
 import $ from "jquery"
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap"
+// import { Button, Modal, ModalHeader, ModalBody } from "reactstrap"
+import Modal from "react-modal"
+
 const CLIENT_ID =
   "592443710560-iv53i6i8n8q1q9v53tat6qg4dmps3knp.apps.googleusercontent.com"
 const API_KEY = "AIzaSyABMZUitJ-kKdMQg5u-gg5RcBRjeNrv4tU"
@@ -198,6 +200,11 @@ const GoogleCalendar = () => {
     setEventDesc(event._def.extendedProps.disc)
   }
 
+  // const toggleModal = () => {
+  //   setModal(!modal)
+  //   setAddEventModal(!addEventModal)
+  // }
+
   return (
     <div className="calander-container">
       <div className="button-container">
@@ -217,9 +224,14 @@ const GoogleCalendar = () => {
         GoogleCalendarApikey={API_KEY}
         eventClick={handleEventClick}
       />
-      <Modal isOpen={addEventModal} className="inputModal">
-        <ModalBody>
-          <div>
+      <Modal 
+       isOpen={addEventModal}
+       contentLabel="My dialog"
+       className="mymodal"
+       overlayClassName="myoverlay-event"
+       closeTimeoutMS={500}
+          >
+       <div>
             <div className="date-input-container">
               <div className="input-label">
                 <label>Title</label>
@@ -246,7 +258,7 @@ const GoogleCalendar = () => {
               <div className="input-label">
                 <label htmlFor="">Enter Start Date</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   name="startDate"
                   value={newEvent.startDate}
                   placeholder="start date"
@@ -256,7 +268,7 @@ const GoogleCalendar = () => {
               <div className="input-label">
                 <label htmlFor="">Enter End Date</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   name="endDate"
                   value={newEvent.endDate}
                   placeholder="end date"
@@ -270,10 +282,32 @@ const GoogleCalendar = () => {
             <button  onClick={() => setAddEventModal(false)}>Close</button>
             </div>
           </div>
-        </ModalBody>
       </Modal>
 
-      <Modal isOpen={modal} className="Eventmodel">
+      <Modal
+        isOpen={modal}
+        contentLabel="My dialog"
+        className="mymodal"
+        overlayClassName="myoverlay"
+        closeTimeoutMS={500}
+      >
+        <div className="label-t-d">
+          <label>Event Title:</label>
+          <p>{eventTitle}</p>
+        </div>
+        <div className="label-t-d">
+          <label>Event Description:</label>
+          <p>  {eventDesc ? eventDesc : "this event has no summary"} </p>
+        </div>
+        <div className="event-close-btn" >
+        <button onClick={handelCancel}>
+          Close
+        </button>
+        </div>
+       
+      </Modal>
+
+      {/* <Modal isOpen={modal} className="Eventmodel">
         <Button color="secondary" onClick={handelCancel}>
           X
         </Button>
@@ -291,7 +325,7 @@ const GoogleCalendar = () => {
             </p>
           </div>
         </ModalBody>
-      </Modal>
+      </Modal> */}
     </div>
   )
 }

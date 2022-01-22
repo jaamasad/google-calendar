@@ -85,7 +85,6 @@
 }
 
 .date-input-container {
-  display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
 }
@@ -93,6 +92,7 @@
 .input-label {
   display: flex;
   flex-direction: column;
+  margin-bottom: 12px;
 }
 
 /* inputModal */
@@ -118,12 +118,19 @@
 
 .popup-button-container {
   display: flex;
-justify-content: space-evenly;
-width: 50%;
-    margin: auto;
-    margin-top: 15px;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: auto;
+  margin-top: 15px;
 }
 
+.event-close-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.event-close-btn button,
 .popup-button-container button {
   width: 80px;
     height: 30px;
@@ -133,4 +140,90 @@ width: 50%;
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.label-t-d label {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.mymodal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+.myoverlay-event,
+.myoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  z-index: 11;
+  transition: opacity 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.modal-btn {
+  padding: 12px 20px;
+    margin-top: 18px;
+    font-weight: 900;
+    cursor:pointer;
+    background: white;
+    border-radius: 8px;
+}
+
+.modal-heading {
+  font-size: 24px;
+  margin-bottom: 13px;
+}
+
+.mymodal select {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border-radius: 3px;
+  background: lightgrey;
+  border: navajowhite;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input-container input {
+  width: 50%;
+  height: 40px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.input-container input:nth-child(2) {
+  margin: 0 5px;
 }
